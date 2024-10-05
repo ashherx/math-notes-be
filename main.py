@@ -11,12 +11,25 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan = lifespan)
 
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*", "https://math-notes-fe.vercel.app"],
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
+
+origins = [
+    "http://localhost:5173",  # Replace with your actual frontend URL
+    "https://math-notes-fe.vercel.app",  # Add other origins as needed
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*", "https://math-notes-fe.vercel.app"],
+    allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Allow all methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allow all headers
 )
 
 @app.get("/")
